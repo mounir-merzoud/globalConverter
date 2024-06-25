@@ -15,6 +15,13 @@ public class GlobalConverter {
         System.out.print("Entrez une chaîne de caractères à traduire : ");
         input = scanner.nextLine();
 
+        // Vérification de la validité de la chaîne de caractères entrée par l'utilisateur
+        if (!isValidInput(input)) {
+            System.out.println("Erreur : la chaîne de caractères contient des caractères non valides. Utilisez uniquement des lettres, des chiffres, des accents et des espaces.");
+            scanner.close();
+            return;
+        }
+
         // Vérification de la base de traduction
         if (args.length > 0) {
             base = args[0].toLowerCase();
@@ -87,6 +94,16 @@ public class GlobalConverter {
             result = Character.toString((char) value);
         }
         return result;
+    }
+
+    // Méthode pour vérifier la validité de la chaîne de caractères entrée par l'utilisateur
+    public static boolean isValidInput(String input) {
+        return input.chars().allMatch(c -> Character.isLetterOrDigit(c) || Character.isSpaceChar(c) || isAccent(c));
+    }
+
+    // Méthode pour vérifier si un caractère est une lettre accentuée
+    public static boolean isAccent(int c) {
+        return String.valueOf((char) c).matches("[\\p{L}&&[\\p{M}]]");
     }
 }
 
