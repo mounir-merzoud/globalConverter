@@ -75,9 +75,15 @@ public class Interface extends Application{
     public void setButtonAction (Button button, String type, TextField stringToConvert, Label result) {
         button.setOnAction(e -> {
             String input = stringToConvert.getText();
+            if (!GlobalConverter.isValidInput(input)) {
+                result.setText("Invalid input");
+                return;
+            }
+            else {
             int[] asciiValues = GlobalConverter.convertToASCII(input);
             String convertedString = GlobalConverter.convertFromASCII(asciiValues, type);
             result.setText(convertedString);
+            }
         });
     }
 
